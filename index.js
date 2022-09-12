@@ -11,51 +11,64 @@ const getRandomHole = () => {
 const holeContainerDOM = document.querySelector('.hole-container');
 const scoreDOM = document.querySelector('.score');
 const missedDOM = document.querySelector('.missed');
+const screenContentDOM = document.querySelector('.screen-content');
+
 const gameStats = {
     score: 0,
     missed: 0
 };
 
-const holeClickEvent = (event) => {
+const renderScores = () => {
+    scoreDOM.textContent = gameStats.score;
+    missedDOM.textContent = gameStats.missed;
+}
+
+const handleHoleClick = (event) => {
     if (!event.target.classList.contains('hole')) {
         return;
     }
     if (event.target.classList.contains('mole')) {
         event.target.classList.remove('mole');
         gameStats.score++;
-        scoreDOM.textContent = gameStats.score;
     } else {
         gameStats.missed++;
-        missedDOM.textContent = gameStats.missed;
         gameStats.missed === 3 && gameOver();
     }
+    renderScores();
 };
 
-let loopId = null;
+let gameLoopId = null;
 
 const gameOver = () => {
-    clearTimeout(loopId);
-    holeContainerDOM.removeEventListener('click', holeClickEvent);
-    alert('game over');
+    clearTimeout(gameLoopId);
+    holeContainerDOM.removeEventListener('click', handleHoleClick);
+    allHoles.forEach(hole => hole.classList.remove('mole'));
+    screenContentDOM.innerHTML = `
+        <div>
+            <p>Game over</p>
+            <button onclick="start()">Play again</button>
+        </div>
+    `;
 };
 
 const gameLoop = () => {
     const randomHole = getRandomHole();
     const randomTime = generateRandom(200, 1000);
     randomHole.classList.add('mole');
-    loopId = setTimeout(() => {
+    gameLoopId = setTimeout(() => {
         randomHole.classList.remove('mole');
         gameLoop();
     }, randomTime);
-}
-
-const start = () => {
-    holeContainerDOM.addEventListener('click', holeClickEvent);
-    gameLoop();
 };
 
-start();
-
+const start = () => {
+    holeContainerDOM.addEventListener('click', handleHoleClick);
+    screenContentDOM.innerHTML = '';
+    gameStats.score = 0;
+    gameStats.missed = 0;
+    renderScores();
+    gameLoop();
+};
 
 /* 
 A function that generates a random length of time for the mole to peep.
