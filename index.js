@@ -69,10 +69,3 @@ const start = () => {
     renderScores();
     gameLoop();
 };
-
-/* 
-A function that generates a random length of time for the mole to peep.
-A function that selects a random hole for the mole to peep from.
-Using the two functions above, create a function to make the mole emerge out of the random hole.
-A start-up function for the game.
-*/

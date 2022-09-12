@@ -4,6 +4,32 @@
     background-color: black;
     border: 10px solid brown;
     border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.hole > img {
+    transform: rotateX(90deg);
+    perspective: 0px;
+    transition: all 0.3s ease-in-out;
+    transform-origin: bottom;
+    position: absolute;
+    height: auto;
+    width: 90%;
+    pointer-events: none;
+}
+
+.mole > img {
+    transform: rotateX(0deg);
+}
+
+.hole {
+    cursor: url(./assets/hammer.png), pointer;
+}
+
+.hole:active {
+    cursor: url(./assets/hammer-bop.png), pointer;
 }
 
 .hole-row {
@@ -22,10 +48,6 @@
 
 .hole-container-wrapper {
     perspective: 180px;
-}
-
-.mole {
-    background-color: white;
 }
 
 .screen {
