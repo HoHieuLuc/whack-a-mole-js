@@ -45,7 +45,7 @@ const gameLoop = () => {
     randomHole.classList.add('mole');
     loopId = setTimeout(() => {
         randomHole.classList.remove('mole');
-        start();
+        gameLoop();
     }, randomTime);
 }
 
