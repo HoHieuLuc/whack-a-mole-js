@@ -1,0 +1,25 @@
+.hole {
+    width: 100px;
+    height: 100px;
+    background-color: black;
+    border: 10px solid brown;
+    border-radius: 50%;
+}
+
+.hole-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.hole-container {
+    border: 1px solid black;
+    padding: 10px;
+    width: fit-content;
+    margin: auto;
+    /* transform: rotateX(14deg); */
+}
+
+.hole-container-wrapper {
+    perspective: 90px;
+}
