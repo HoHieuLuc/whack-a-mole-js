@@ -1,0 +1,1 @@
+# simple whack a mole game in html, css and javascript
