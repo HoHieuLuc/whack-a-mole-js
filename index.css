@@ -23,3 +23,7 @@
 .hole-container-wrapper {
     perspective: 90px;
 }
+
+.mole {
+    background-color: white;
+}

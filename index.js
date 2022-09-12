@@ -1,15 +1,61 @@
-const randomTime = (min, max) => {
+const generateRandom = (min, max) => {
     return Math.random() * (max - min) + min;
 };
 
 const allHoles = document.querySelectorAll('.hole');
-console.log(allHoles);
 
-document.querySelector('.hole-container').addEventListener('click', (event) => {
-    if (event.target.classList.contains('hole')) {
-        alert(randomTime(500, 2000));
-    };
-});
+const getRandomHole = () => {
+    return allHoles[Math.round(generateRandom(0, allHoles.length - 1))];
+};
+
+const holeContainerDOM = document.querySelector('.hole-container');
+const scoreDOM = document.querySelector('.score');
+const missedDOM = document.querySelector('.missed');
+const gameStats = {
+    score: 0,
+    missed: 0
+};
+
+const holeClickEvent = (event) => {
+    if (!event.target.classList.contains('hole')) {
+        return;
+    }
+    if (event.target.classList.contains('mole')) {
+        event.target.classList.remove('mole');
+        gameStats.score++;
+        scoreDOM.textContent = gameStats.score;
+    } else {
+        gameStats.missed++;
+        missedDOM.textContent = gameStats.missed;
+        gameStats.missed === 3 && gameOver();
+    }
+};
+
+let loopId = null;
+
+const gameOver = () => {
+    clearTimeout(loopId);
+    holeContainerDOM.removeEventListener('click', holeClickEvent);
+    alert('game over');
+};
+
+const gameLoop = () => {
+    const randomHole = getRandomHole();
+    const randomTime = generateRandom(200, 1000);
+    randomHole.classList.add('mole');
+    loopId = setTimeout(() => {
+        randomHole.classList.remove('mole');
+        start();
+    }, randomTime);
+}
+
+const start = () => {
+    holeContainerDOM.addEventListener('click', holeClickEvent);
+    gameLoop();
+};
+
+start();
+
 
 /* 
 A function that generates a random length of time for the mole to peep.
